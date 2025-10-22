@@ -1,10 +1,10 @@
-# 🛠️ Mirakle Development Notes
+# Mirakle Development Notes
 
 Running notes, commands, and gotchas for daily development and deployment.
 
 ---
 
-## 🚀 Daily Development Workflow
+## Daily Development Workflow
 
 ### Starting Your Development Session
 
@@ -44,7 +44,7 @@ sudo systemctl stop redis
 
 ---
 
-## 📝 Blog Post Workflow
+## Blog Post Workflow
 
 ### Writing a New Post
 
@@ -113,7 +113,7 @@ Rails.cache.delete('blog_posts:all')
 
 ---
 
-## 🗄️ Database Commands
+## Database Commands
 
 ### Common PostgreSQL Tasks
 
@@ -182,7 +182,7 @@ EXIT
 
 ---
 
-## 🔧 Rails Console Tips
+## Rails Console Tips
 
 ```bash
 # Start Rails console
@@ -209,7 +209,7 @@ exit
 
 ---
 
-## 🧪 Testing & Debugging
+## Testing & Debugging
 
 ### Check What's Running
 
@@ -291,7 +291,7 @@ Rails.cache.delete('blog_posts:all')
 
 ---
 
-## 📦 Gem Management
+## Gem Management
 
 ### Installing New Gems
 
@@ -321,7 +321,7 @@ bundle outdated
 
 ---
 
-## 🚢 Deployment (Production Server)
+## Deployment (Production Server)
 
 ### Prerequisites on Droplet
 
@@ -415,7 +415,7 @@ ps aux | grep sidekiq
 
 ---
 
-## 🔐 Environment Variables
+## Environment Variables
 
 ### Local Development
 
@@ -451,7 +451,7 @@ sudo systemctl restart puma
 
 ---
 
-## 📊 Future: Sidekiq & Background Jobs (Phase 2)
+## Future: Sidekiq & Background Jobs (Phase 2)
 
 ### Starting Sidekiq Locally
 
@@ -497,7 +497,7 @@ LLEN "queue:scraping"  # Number of scraping jobs
 
 ---
 
-## 🎯 Quick Reference: File Locations
+## Quick Reference: File Locations
 
 ```
 mirakle/
@@ -529,7 +529,7 @@ mirakle-images/             # Separate Git repo
 
 ---
 
-## 🆘 Emergency Commands
+## Emergency Commands
 
 ### Site is Down
 
@@ -583,7 +583,7 @@ psql mirakle_production < backup_20251022.sql
 
 ---
 
-## 📚 Helpful Aliases (Add to ~/.bashrc or ~/.zshrc)
+## Helpful Aliases (Add to ~/.bashrc or ~/.zshrc)
 
 ```bash
 # Rails shortcuts
@@ -610,7 +610,7 @@ source ~/.bashrc  # or ~/.zshrc
 
 ---
 
-## 🔄 Regular Maintenance Tasks
+## Regular Maintenance Tasks
 
 ### Daily (When Developing)
 
@@ -640,7 +640,7 @@ source ~/.bashrc  # or ~/.zshrc
 
 ---
 
-## 📞 When to Ask for Help
+## When to Ask for Help
 
 - PostgreSQL won't start after system update
 - Bundler conflicts that `bundle update` can't resolve
@@ -653,7 +653,7 @@ source ~/.bashrc  # or ~/.zshrc
 
 ---
 
-## 🎓 Learning Resources for Debugging
+## Learning Resources for Debugging
 
 - **Rails Guides - Debugging**:
   https://guides.rubyonrails.org/debugging_rails_applications.html

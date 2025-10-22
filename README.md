@@ -1,4 +1,4 @@
-# ✨ Mirakle
+# Mirakle
 
 **IT Services & Creative Storytelling Platform**
 
@@ -8,25 +8,25 @@ and developers.
 
 ---
 
-## 🎯 What is Mirakle?
+## What is Mirakle?
 
 A personal portfolio and services platform featuring:
 
-- **📝 Git-based Blog** - Write in terminal, push to publish (Markdown + YAML
-  front matter)
-- **🎬 Film Portfolio** - Video work and tutorials via Vimeo integration
-- **📊 Shopify App Store Analytics** - Deep data insights with daily scraping,
+- **Git-based Blog** - Write in terminal, push to publish (Markdown + YAML front
+  matter)
+- **Film Portfolio** - Video work and tutorials via Vimeo integration
+- **Shopify App Store Analytics** - Deep data insights with daily scraping,
   review tracking, and D3.js visualizations
-- **🎙️ Audio/Video Transcription Service** - AI-powered speech-to-text with
+- **Audio/Video Transcription Service** - AI-powered speech-to-text with
   translation (coming soon)
-- **🎥 Shot Planning Tool** - Visual flowchart app for cinematographers (coming
+- **Shot Planning Tool** - Visual flowchart app for cinematographers (coming
   soon)
 
 ---
 
-## 🚀 Current Status: Phase 1 - MVP
+## Current Status: Phase 1 - MVP
 
-### ✅ Completed
+### Completed
 
 - [x] Rails 8 setup with PostgreSQL & Redis
 - [x] Git-based blog system (Markdown with front matter)
@@ -36,13 +36,13 @@ A personal portfolio and services platform featuring:
 - [x] Liquid templating integration
 - [x] Redis caching for blog posts
 
-### 🚧 In Progress
+### In Progress
 
 - [ ] Polaris CSS styling
 - [ ] Vimeo API integration for portfolio
 - [ ] Blog index/show page polish
 
-### 📋 Next Up (Phase 2)
+### Next Up (Phase 2)
 
 - [ ] Shopify App Store scraper (Rails-native with Sidekiq)
 - [ ] PostgreSQL models for apps, reviews, and review changes
@@ -52,7 +52,7 @@ A personal portfolio and services platform featuring:
 
 ---
 
-## 🎬 Future Projects
+## Future Projects
 
 ### 1. AV2Text - Transcription & Translation Service
 
@@ -143,7 +143,7 @@ sequence, etc.)
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Core
 
@@ -181,7 +181,7 @@ sequence, etc.)
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 mirakle/
@@ -205,7 +205,7 @@ mirakle-images/            # Separate Git repository
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
 ### Phase 1: MVP (Current - 2-3 weeks)
 
@@ -251,7 +251,7 @@ mirakle-images/            # Separate Git repository
 
 ---
 
-## 🚦 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -313,7 +313,7 @@ cap production deploy
 
 ---
 
-## 🎨 Design Philosophy
+## Design Philosophy
 
 - **Developer happiness** - Optimize for workflow, not theoretical scale
 - **Build in public** - Document the journey
@@ -323,7 +323,7 @@ cap production deploy
 
 ---
 
-## 📚 Learning Resources
+## Learning Resources
 
 This project is a learning journey into Ruby on Rails. Key resources:
 
@@ -335,13 +335,13 @@ This project is a learning journey into Ruby on Rails. Key resources:
 
 ---
 
-## 📝 License
+## License
 
 MIT License - feel free to fork and adapt for your own projects!
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 This is primarily a personal learning project, but suggestions and ideas are
 welcome! Open an issue or reach out.

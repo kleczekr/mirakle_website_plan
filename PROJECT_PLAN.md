@@ -3,8 +3,8 @@
 ## Project Overview
 
 A personal IT and creative services website built with Ruby on Rails, showcasing
-video portfolio, interactive CV, blog, and comprehensive Shopify App Store
-analytics with daily scraping and change tracking.
+video portfolio, blog, and comprehensive Shopify App Store analytics with daily
+scraping and change tracking.
 
 ---
 
@@ -94,19 +94,6 @@ create_table :vimeo_videos do |t|
   t.string :category # tutorial/creative
   t.text :embed_html
   t.integer :view_count
-  t.timestamps
-end
-```
-
-#### CVSection
-
-```ruby
-create_table :cv_sections do |t|
-  t.string :title
-  t.integer :order
-  t.string :icon
-  t.jsonb :content # experiences/skills
-  t.boolean :is_expanded_by_default
   t.timestamps
 end
 ```
@@ -352,7 +339,7 @@ end
 
 ---
 
-### Phase 2: Interactive CV + Public Stats (4-6 weeks)
+### Phase 2: Public Stats (4-6 weeks)
 
 **Goal**: Scraper + analytics dashboard
 
@@ -366,8 +353,6 @@ end
   - Trending apps (rating changes)
   - Review volume over time
   - Category distribution
-- Interactive CV with accordion sections
-- Hover effects and tooltips
 
 **Tech Focus**:
 
@@ -486,7 +471,6 @@ end
 
 - Video portfolio (Vimeo embeds)
 - Blog articles
-- Interactive CV
 - Basic Shopify App Store stats:
   - Top apps by category
   - Recent trending apps
