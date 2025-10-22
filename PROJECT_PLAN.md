@@ -29,6 +29,7 @@ scraping and change tracking.
 - **API Integration**:
   - Vimeo API (video portfolio)
   - Anthropic API (AI content generation)
+  - OpenAI API (transcription service - Phase 5)
   - Newsletter service (Mailchimp/SendGrid/ConvertKit)
 
 ### Frontend
@@ -286,6 +287,129 @@ end
 
 ---
 
+### Future: AV2Text Service (Phase 5)
+
+#### TranscriptionJob
+
+```ruby
+create_table :transcription_jobs do |t|
+  t.references :user
+  t.string :file_name
+  t.string :file_path # temporary storage
+  t.string :status # pending/processing/completed/failed
+  t.text :transcript_text
+  t.string :source_language
+  t.string :target_language # for translation
+  t.integer :duration_seconds
+  t.integer :file_size_bytes
+  t.string :openai_api_key_hash # user's BYOK
+  t.decimal :processing_cost, precision: 10, scale: 4
+  t.jsonb :metadata # file type, compression settings, etc.
+  t.text :error_message
+  t.timestamps
+end
+
+add_index :transcription_jobs, :user_id
+add_index :transcription_jobs, :status
+add_index :transcription_jobs, :created_at
+```
+
+#### TranscriptionAnnotation
+
+```ruby
+create_table :transcription_annotations do |t|
+  t.references :transcription_job, null: false
+  t.integer :timestamp_seconds
+  t.text :note
+  t.string :annotation_type # comment/marker/correction
+  t.timestamps
+end
+
+add_index :transcription_annotations, :transcription_job_id
+```
+
+---
+
+### Future: Shot Planner Tool (Phase 6)
+
+#### Project
+
+```ruby
+create_table :projects do |t|
+  t.references :user, null: false
+  t.string :name
+  t.text :description
+  t.string :status # planning/in_progress/completed
+  t.date :shoot_date
+  t.string :location
+  t.jsonb :collaborators # array of user IDs
+  t.timestamps
+end
+
+add_index :projects, :user_id
+add_index :projects, :status
+```
+
+#### Shot
+
+```ruby
+create_table :shots do |t|
+  t.references :project, null: false
+  t.string :shot_number
+  t.string :scene_reference
+  t.text :description
+  t.string :camera_angle
+  t.string :camera_movement
+  t.string :lens
+  t.string :focal_length
+  t.text :lighting_notes
+  t.string :location_name
+  t.integer :setup_number
+  t.integer :sequence_order # chronological in film
+  t.integer :shooting_order # actual shooting order
+  t.string :status # planned/shot/edited
+  t.jsonb :reference_images # array of image URLs
+  t.decimal :position_x # for node graph
+  t.decimal :position_y # for node graph
+  t.timestamps
+end
+
+add_index :shots, :project_id
+add_index :shots, :status
+add_index :shots, :location_name
+add_index :shots, :setup_number
+```
+
+#### ShotConnection
+
+```ruby
+create_table :shot_connections do |t|
+  t.references :from_shot, null: false, foreign_key: { to_table: :shots }
+  t.references :to_shot, null: false, foreign_key: { to_table: :shots }
+  t.string :connection_type # same_location/similar_angle/chronological/camera_setup
+  t.timestamps
+end
+
+add_index :shot_connections, [:from_shot_id, :to_shot_id], unique: true
+```
+
+#### ShotComment
+
+```ruby
+create_table :shot_comments do |t|
+  t.references :shot, null: false
+  t.references :user, null: false
+  t.text :comment_text
+  t.boolean :resolved, default: false
+  t.timestamps
+end
+
+add_index :shot_comments, :shot_id
+add_index :shot_comments, [:shot_id, :resolved]
+```
+
+---
+
 ## Scraping Architecture
 
 ### Job Structure
@@ -415,9 +539,125 @@ end
 
 ---
 
+### Phase 5: AV2Text - Transcription & Translation Service (TBD)
+
+**Goal**: AI-powered transcription service for filmmakers
+
+**Status**: Proof of concept complete in Python
+([av2text repo](https://github.com/kleczekr/av2text))
+
+**Features**:
+
+- Upload audio/video files (web interface)
+- Automatic compression and chunking
+- Speech-to-text transcription via OpenAI Whisper API
+- Optional translation to target language
+- Annotation support for timestamped notes
+- BYOK (Bring Your Own Key) - users provide their OpenAI API key
+- WebSocket for real-time progress updates
+- Download transcripts in multiple formats
+
+**Technical Implementation**:
+
+- **Option A**: Keep Python microservice, integrate with Rails via API
+- **Option B**: Rewrite in Ruby using `ruby-openai` gem + `ffmpeg` for media
+  processing
+- File upload handling with Active Storage or similar
+- Background job processing with Sidekiq
+- Temporary storage management (cleanup after processing)
+- Cost calculation and display (based on audio duration)
+
+**Use Cases**:
+
+- Film editors needing quick transcripts
+- Content creators localizing videos
+- Documentary filmmakers organizing interview footage
+- Accessibility (generating subtitles)
+- Podcast transcription
+
+**Tech Focus**:
+
+- File upload handling (large files)
+- Media processing (compression, format conversion)
+- OpenAI API integration
+- WebSocket real-time updates
+- User API key management (secure storage)
+
+---
+
+### Phase 6: Shot Planner - Visual Cinematography Tool (TBD)
+
+**Goal**: Interactive shot planning tool for cinematographers
+
+**Status**: Concept phase (requested by cinematographer collaborator)
+
+**Core Concept**: Visual node-based interface where each node represents a shot,
+connected by relationships (same location, similar angle, chronological
+sequence, etc.)
+
+**Features**:
+
+- **Shot Management**:
+  - Create shot nodes with detailed metadata
+  - Shot number, scene reference, camera specs
+  - Lens/focal length, lighting notes
+  - Upload reference images per shot
+  - Status tracking (planned → shot → edited)
+
+- **Visual Organization**:
+  - D3.js node graph visualization
+  - Drag-and-drop repositioning
+  - Cluster shots by location/setup
+  - Timeline view (chronological vs. shooting order)
+  - Color-coding by status/location
+
+- **Collaboration**:
+  - Share projects with crew members
+  - Comment threads on individual shots
+  - Real-time updates (ActionCable)
+  - Role-based permissions (director, DP, gaffer, etc.)
+
+- **Export & Output**:
+  - PDF shot list
+  - Shooting schedule grouped by location
+  - Location-based call sheets
+  - Reference image contact sheets
+
+**Technical Stack**:
+
+- D3.js for interactive node graph visualization
+- Drag-and-drop interface (JavaScript + Rails backend)
+- Image storage (separate mirakle-images repo or Cloudflare R2)
+- Real-time collaboration via ActionCable WebSockets
+- PostgreSQL with JSON columns for flexible metadata
+- Canvas API for visual annotations on reference images
+
+**UI/UX Design**:
+
+- Desktop-first (cinematographers work on laptops)
+- Touch-friendly for tablet use on set
+- Extensive keyboard shortcuts for power users
+- Print-friendly views (PDF generation)
+- Dark mode (for low-light set environments)
+- Responsive but optimized for large screens
+
+**Tech Focus**:
+
+- D3.js advanced visualizations
+- ActionCable WebSocket real-time features
+- Complex state management in frontend
+- PDF generation from structured data
+- Image annotation tools
+- Collaborative editing with conflict resolution
+
+---
+
 ## Total Timeline
 
-**3-4 months** with consistent effort while learning Rails
+**Core Platform (Phases 1-4)**: 3-4 months with consistent effort while learning
+Rails
+
+**Future Expansions (Phases 5-6)**: TBD based on user demand and available time
 
 ---
 
@@ -493,6 +733,11 @@ end
 - Scraping job monitoring
 - Audit logs
 - Approve/edit AI-generated content
+
+### Future Tools
+
+- **AV2Text**: Transcription service (BYOK model)
+- **Shot Planner**: Visual cinematography planning tool
 
 ---
 
