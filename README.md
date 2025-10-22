@@ -1,565 +1,351 @@
-# Shopify Insights Platform - Project Plan
+# ✨ Mirakle
 
-## Project Overview
+**IT Services & Creative Storytelling Platform**
 
-A personal IT and creative services website built with Ruby on Rails, showcasing
-video portfolio, interactive CV, blog, and comprehensive Shopify App Store
-analytics with daily scraping and change tracking.
+Mirakle is a Ruby on Rails-powered platform showcasing IT services, film editing
+work, and data analytics - with a focus on building useful tools for creatives
+and developers.
 
 ---
 
-## Tech Stack
+## 🎯 What is Mirakle?
 
-### Core Framework
+A personal portfolio and services platform featuring:
 
-- **Backend**: Ruby on Rails 7+
-- **Templating**: Liquid (via `liquid` gem)
-- **Styling**: Shopify Polaris CSS/design tokens (no React components)
-- **Database**: PostgreSQL (on same droplet)
-- **Cache/Jobs**: Redis + Sidekiq
-- **Deployment**: Capistrano to Digital Ocean Ubuntu droplet
+- **📝 Git-based Blog** - Write in terminal, push to publish (Markdown + YAML
+  front matter)
+- **🎬 Film Portfolio** - Video work and tutorials via Vimeo integration
+- **📊 Shopify App Store Analytics** - Deep data insights with daily scraping,
+  review tracking, and D3.js visualizations
+- **🎙️ Audio/Video Transcription Service** - AI-powered speech-to-text with
+  translation (coming soon)
+- **🎥 Shot Planning Tool** - Visual flowchart app for cinematographers (coming
+  soon)
 
-### Key Gems & Libraries
+---
 
-- **Authentication**: Devise + OmniAuth (Google OAuth)
-- **Authorization**: Pundit or CanCanCan
-- **Markdown Processing**: Redcarpet or Kramdown
-- **Background Jobs**: Sidekiq + sidekiq-cron
-- **Web Scraping**: Mechanize or Faraday + Nokogiri
-- **API Integration**:
-  - Vimeo API (video portfolio)
-  - Anthropic API (AI content generation)
-  - Newsletter service (Mailchimp/SendGrid/ConvertKit)
+## 🚀 Current Status: Phase 1 - MVP
+
+### ✅ Completed
+
+- [x] Rails 8 setup with PostgreSQL & Redis
+- [x] Git-based blog system (Markdown with front matter)
+- [x] Blog post rendering with Redcarpet
+- [x] Custom shortcode processing for embedded content
+- [x] Basic routing and views
+- [x] Liquid templating integration
+- [x] Redis caching for blog posts
+
+### 🚧 In Progress
+
+- [ ] Polaris CSS styling
+- [ ] Vimeo API integration for portfolio
+- [ ] Blog index/show page polish
+
+### 📋 Next Up (Phase 2)
+
+- [ ] Shopify App Store scraper (Rails-native with Sidekiq)
+- [ ] PostgreSQL models for apps, reviews, and review changes
+- [ ] Change detection system (track edits, deletions, replies)
+- [ ] Public analytics dashboard with D3.js visualizations
+- [ ] Interactive data exploration
+
+---
+
+## 🎬 Future Projects
+
+### 1. AV2Text - Transcription & Translation Service
+
+**Status:** Proof of concept complete in Python
+([av2text repo](https://github.com/kleczekr/av2text))
+
+A web service for filmmakers and content creators to transcribe and translate
+audio/video files using OpenAI's Whisper API.
+
+**Features:**
+
+- Upload audio/video files
+- Automatic compression and chunking
+- Speech-to-text transcription
+- Optional translation to target language
+- Annotation support for timestamped notes
+- BYOK (Bring Your Own Key) - users provide their OpenAI API key for free usage
+- Web-based interface (migrate from Python CLI to Rails web app)
+
+**Technical Approach:**
+
+- Option A: Keep Python microservice, integrate with Rails via API
+- Option B: Rewrite in Ruby using `ruby-openai` gem + `ffmpeg` for media
+  processing
+- File upload handling (temporary storage during processing)
+- Background job processing with Sidekiq
+- WebSocket for real-time progress updates
+
+**Use Cases:**
+
+- Film editors needing quick transcripts
+- Content creators localizing videos
+- Documentary filmmakers organizing interview footage
+- Accessibility (generating subtitles)
+
+---
+
+### 2. Shot Planner - Visual Cinematography Tool
+
+**Status:** Concept phase (requested by cinematographer collaborator)
+
+An interactive flowchart/planning tool for cinematographers to organize shot
+lists, group by location/setup, and plan shooting schedules.
+
+**Core Concept:** Visual node-based interface where each node represents a shot,
+connected by relationships (same location, similar angle, chronological
+sequence, etc.)
+
+**Features:**
+
+- **Shot Nodes:**
+  - Shot number/name
+  - Scene reference
+  - Camera angle/movement notes
+  - Lens/focal length
+  - Lighting setup notes
+  - Reference images upload
+- **Visual Grouping:**
+  - Cluster shots by location
+  - Group by camera setup
+  - Timeline view (chronological in film vs. shooting order)
+- **Collaboration:**
+  - Share shot plans with crew
+  - Comment threads on individual shots
+  - Status tracking (planned → shot → edited)
+- **Export:**
+  - PDF shot list
+  - Shooting schedule
+  - Location-based call sheets
+
+**Technical Stack:**
+
+- D3.js for interactive node graph visualization
+- Drag-and-drop interface for rearranging shots
+- Image storage solution (TBD - separate repo, Cloudflare R2, or local droplet
+  storage)
+- Real-time collaboration (ActionCable WebSockets)
+- PostgreSQL for shot/project data
+- Canvas API for visual annotations on reference images
+
+**UI/UX Considerations:**
+
+- Desktop-first (cinematographers work on laptops)
+- Touch-friendly for tablet use on set
+- Keyboard shortcuts for power users
+- Print-friendly views
+- Dark mode (for low-light environments)
+
+---
+
+## 🛠️ Tech Stack
+
+### Core
+
+- **Ruby on Rails 8.1** - Backend framework
+- **PostgreSQL** - Primary database
+- **Redis** - Caching & Sidekiq backend
+- **Liquid** - Templating engine
+- **Tailwind CSS** - Styling (with Polaris design tokens)
 
 ### Frontend
 
-- Polaris CSS for aesthetic
-- Vanilla JavaScript for progressive enhancement
-- **D3.js** for data visualization (via CDN)
+- **D3.js** - Data visualizations
+- **Vanilla JavaScript** - Progressive enhancement
+- **Stimulus** - Minimal JavaScript framework
+
+### Background Jobs & Scraping
+
+- **Sidekiq** - Background job processing
+- **sidekiq-cron** - Scheduled jobs (daily scraping)
+- **Mechanize + Nokogiri** - Web scraping
+- **Faraday** - HTTP requests
+
+### APIs & Integrations
+
+- **Vimeo API** - Video portfolio
+- **OpenAI API** - Transcription service (future)
+- **Anthropic API** - AI content generation (Phase 4)
+
+### Deployment
+
+- **Capistrano** - Deployment automation
+- **Digital Ocean Droplet** - Ubuntu server
+- **Nginx** - Reverse proxy & static file serving
+- **Puma** - Rails web server
 
 ---
 
-## Infrastructure
-
-### Hosting Architecture
+## 📂 Project Structure
 
 ```
-Digital Ocean Ubuntu Droplet (Single Server)
-├── Nginx (reverse proxy, :80/443)
-├── Rails/Puma (:3000)
-├── PostgreSQL (localhost)
-├── Redis (Sidekiq backend)
-└── Sidekiq Workers (background jobs)
-```
+mirakle/
+├── app/                    # Rails application code
+├── blog_posts/             # Markdown blog posts (Git-based CMS)
+│   ├── 2025/
+│   │   ├── 01-january/
+│   │   ├── 02-february/
+│   │   └── ...
+│   ├── _drafts/           # Unpublished posts
+│   └── _private/          # Admin-only posts
+├── config/                # Rails configuration
+├── db/                    # Database migrations & schema
+└── ...
 
-### Recommended Droplet Size
-
-- **Minimum**: $12/month (2GB RAM)
-- **Recommended**: $24/month (4GB RAM)
-- **Ideal**: $48/month (8GB RAM)
-
-### SSL
-
-- Let's Encrypt via Certbot
-
----
-
-## Data Models
-
-### Blog & Content
-
-#### BlogPost
-
-```ruby
-create_table :blog_posts do |t|
-  t.string :title
-  t.string :slug, index: { unique: true }
-  t.text :content # ActionText rich text
-  t.string :status # draft/published/private
-  t.datetime :published_at
-  t.references :author # for future
-  t.timestamps
-end
-```
-
-#### VimeoVideo
-
-```ruby
-create_table :vimeo_videos do |t|
-  t.string :vimeo_id
-  t.string :title
-  t.text :description
-  t.string :thumbnail_url
-  t.integer :duration
-  t.string :category # tutorial/creative
-  t.text :embed_html
-  t.integer :view_count
-  t.timestamps
-end
-```
-
-#### CVSection
-
-```ruby
-create_table :cv_sections do |t|
-  t.string :title
-  t.integer :order
-  t.string :icon
-  t.jsonb :content # experiences/skills
-  t.boolean :is_expanded_by_default
-  t.timestamps
-end
+mirakle-images/            # Separate Git repository
+├── blog/                  # Blog post images
+├── portfolio/             # Film work screenshots
+└── shot-planner/          # Reference images for shot planning
 ```
 
 ---
 
-### Shopify App Store Data
+## 🗺️ Roadmap
 
-#### ShopifyApp
+### Phase 1: MVP (Current - 2-3 weeks)
 
-```ruby
-create_table :shopify_apps do |t|
-  t.string :app_id, null: false, index: { unique: true }
-  t.string :name
-  t.string :developer
-  t.string :category
-  t.string :pricing_model
-  t.decimal :rating, precision: 3, scale: 2
-  t.integer :review_count
-  t.string :install_count_range
-  t.text :description
-  t.jsonb :features, default: []
-  t.boolean :is_active, default: true
-  t.datetime :last_scraped_at
-  t.datetime :first_seen_at
-  t.datetime :last_seen_at
-  t.timestamps
-end
+- Git-based blogging system
+- Vimeo video portfolio
+- Basic site structure with Polaris styling
 
-# Indexes
-add_index :shopify_apps, :category
-add_index :shopify_apps, :rating
-add_index :shopify_apps, [:rating, :review_count]
-```
+### Phase 2: Shopify Analytics (4-6 weeks)
 
-#### ShopifyReview (with deletion tracking)
+- Daily scraper with change detection
+- Public analytics dashboard
+- D3.js visualizations
+- Historical trend tracking
 
-```ruby
-create_table :shopify_reviews do |t|
-  t.string :review_id, null: false, index: { unique: true }
-  t.references :app, null: false, foreign_key: { to_table: :shopify_apps }
-  t.string :author_name
-  t.integer :rating
-  t.text :review_text
-  t.integer :helpful_count
-  t.datetime :posted_at
-  t.string :merchant_size
+### Phase 3: Authentication & Premium Features (3-4 weeks)
 
-  # Tracking fields
-  t.boolean :is_deleted, default: false
-  t.datetime :deleted_at
-  t.datetime :last_scraped_at
-  t.datetime :first_seen_at
+- Google OAuth login
+- Tiered access ~~(free/premium)~~ (non-logged-in/logged-in)
+- Newsletter integration
+- ~~Premium~~ Logged-in analytics features
 
-  t.timestamps
-end
-
-add_index :shopify_reviews, :app_id
-add_index :shopify_reviews, :posted_at
-add_index :shopify_reviews, :rating
-add_index :shopify_reviews, :is_deleted
-```
-
-#### ShopifyReviewChange (change detection!)
-
-```ruby
-create_table :shopify_review_changes do |t|
-  t.references :review, null: false, foreign_key: { to_table: :shopify_reviews }
-  t.string :change_type # 'text_edited', 'rating_changed', 'reply_added', 'deleted'
-  t.jsonb :old_value
-  t.jsonb :new_value
-  t.datetime :detected_at
-  t.timestamps
-end
-
-add_index :shopify_review_changes, :change_type
-add_index :shopify_review_changes, :detected_at
-```
-
-#### ShopifyReviewReply
-
-```ruby
-create_table :shopify_review_replies do |t|
-  t.string :reply_id, index: { unique: true }
-  t.references :review, null: false, foreign_key: { to_table: :shopify_reviews }
-  t.string :developer_name
-  t.text :reply_text
-  t.datetime :posted_at
-  t.boolean :is_deleted, default: false
-  t.datetime :deleted_at
-  t.datetime :last_scraped_at
-  t.timestamps
-end
-```
-
-#### AppStatSnapshot (historical trends)
-
-```ruby
-create_table :app_stat_snapshots do |t|
-  t.references :app, null: false, foreign_key: { to_table: :shopify_apps }
-  t.decimal :rating, precision: 3, scale: 2
-  t.integer :review_count
-  t.string :install_count_range
-  t.date :snapshot_date, null: false
-  t.timestamps
-end
-
-add_index :app_stat_snapshots, [:app_id, :snapshot_date], unique: true
-add_index :app_stat_snapshots, :snapshot_date
-```
-
----
-
-### Authentication & Users
-
-#### User
-
-```ruby
-create_table :users do |t|
-  t.string :email, null: false, index: { unique: true }
-  t.string :encrypted_password
-  t.string :name
-  t.string :google_uid
-  t.string :google_avatar
-  t.string :role # free/premium/admin
-  t.boolean :newsletter_subscribed
-  t.string :newsletter_token
-  t.datetime :last_sign_in_at
-  t.timestamps
-end
-```
-
-#### NewsletterSubscriber
-
-```ruby
-create_table :newsletter_subscribers do |t|
-  t.string :email, null: false, index: { unique: true }
-  t.string :name
-  t.datetime :subscribed_at
-  t.datetime :unsubscribed_at
-  t.string :token # for unsubscribe link
-  t.timestamps
-end
-```
-
-#### UserAppBookmark (premium feature)
-
-```ruby
-create_table :user_app_bookmarks do |t|
-  t.references :user, null: false
-  t.references :app, null: false, foreign_key: { to_table: :shopify_apps }
-  t.text :notes
-  t.timestamps
-end
-```
-
----
-
-### AI & Admin Tools
-
-#### SocialMediaPost
-
-```ruby
-create_table :social_media_posts do |t|
-  t.references :blog_post
-  t.string :platform # facebook/linkedin/twitter/instagram/tiktok
-  t.text :generated_content
-  t.jsonb :image_suggestions
-  t.jsonb :hashtags
-  t.string :status # draft/approved/posted
-  t.datetime :posted_at
-  t.string :ai_model_version
-  t.text :generation_prompt # for debugging
-  t.timestamps
-end
-```
-
-#### AdminActivity (audit log)
-
-```ruby
-create_table :admin_activities do |t|
-  t.references :admin, foreign_key: { to_table: :users }
-  t.string :action
-  t.string :resource_type
-  t.string :resource_id
-  t.jsonb :changes
-  t.timestamps
-end
-```
-
----
-
-## Scraping Architecture
-
-### Job Structure
-
-- **Daily Cron**: Triggers master scraping job
-- **Master Job**: Queues individual app scrapes
-- **App Detail Job**: Scrapes app data, queues review scrape
-- **Review Job**: Scrapes reviews, detects changes/deletions
-
-### Change Detection Logic
-
-- Compare current scrape with stored data
-- Track: text edits, rating changes, deletions, new replies
-- Store changes in `shopify_review_changes` table
-- Mark reviews as `is_deleted: true` if no longer found
-
-### Rate Limiting
-
-- Random 1-3 second delays between requests
-- Respect robots.txt
-- Use rotating user agents if needed
-
-### Data Volume Estimates
-
-- ~10,000 apps
-- ~1,000,000 reviews (100 avg per app)
-- ~200,000 replies (20% of reviews)
-
----
-
-## Phased Development Timeline
-
-### Phase 1: MVP (2-3 weeks)
-
-**Goal**: Basic site + portfolio + blog
-
-**Features**:
-
-- Static homepage with Polaris styling
-- Vimeo video portfolio (embedded players)
-- Blog with rich text editor (ActionText)
-- Draft/published/private status
-- Basic Liquid templating
-
-**Tech Focus**:
-
-- Learn Rails MVC
-- Set up Capistrano deployment
-- Configure PostgreSQL
-- Basic Nginx setup
-
----
-
-### Phase 2: Interactive CV + Public Stats (4-6 weeks)
-
-**Goal**: Scraper + analytics dashboard
-
-**Features**:
-
-- Build Rails-native scraper (Mechanize + Nokogiri)
-- Daily scraping via Sidekiq-cron
-- Change detection for reviews
-- Public stats dashboard (no auth required):
-  - Top rated apps by category
-  - Trending apps (rating changes)
-  - Review volume over time
-  - Category distribution
-- Interactive CV with accordion sections
-- Hover effects and tooltips
-
-**Tech Focus**:
-
-- Master Sidekiq background jobs
-- Complex PostgreSQL queries
-- Data visualization (Chart.js/D3.js)
-- Progressive enhancement with vanilla JS
-
----
-
-### Phase 3: Auth + Premium + Newsletter (3-4 weeks)
-
-**Goal**: User accounts + tiered access
-
-**Features**:
-
-- Google OAuth login (Devise + OmniAuth)
-- User roles: free/premium/admin
-- Premium stats features:
-  - Historical trend analysis
-  - Competitor comparison tools
-  - Review sentiment analysis
-  - Export to CSV
-  - Custom app bookmarks
-- Newsletter signup integration
-- Rate limiting for premium features
-
-**Tech Focus**:
-
-- Authentication flows
-- Authorization with Pundit
-- Newsletter API integration
-- Session management
-
----
-
-### Phase 4: AI Tools + Admin Polish (2-3 weeks)
-
-**Goal**: Content automation + admin dashboard
-
-**Features**:
-
-- AI social media post generator:
-  - Generate platform-specific posts from blog articles
-  - Facebook, LinkedIn, Twitter, Instagram, TikTok
-  - Suggest hashtags and images
-- Admin dashboard:
-  - Monitor scraping health
-  - View failed jobs
-  - Manage users
-  - Approve AI-generated posts
-- Audit logging for admin actions
-
-**Tech Focus**:
+### Phase 4: AI & Admin Tools (2-3 weeks)
 
 - Anthropic API integration
-- Prompt engineering for each platform
-- Admin interface (ActiveAdmin or custom)
-- Background job monitoring
+- Social media post generator
+- Admin dashboard
+- Audit logging
+
+### Phase 5: AV2Text Service (TBD)
+
+- Migrate Python proof-of-concept to Rails
+- Web-based file upload interface
+- Background transcription processing
+- BYOK (Bring Your Own Key) system
+
+### Phase 6: Shot Planner Tool (TBD)
+
+- D3.js node-based interface
+- Shot management system
+- Image upload & annotation
+- Collaboration features
+- Export functionality
 
 ---
 
-## Total Timeline
+## 🚦 Getting Started
 
-**3-4 months** with consistent effort while learning Rails
+### Prerequisites
+
+- Ruby 3.3+
+- PostgreSQL 15+
+- Redis 7+
+
+### Installation
+
+```bash
+# Clone the repos
+git clone https://github.com/kleczekr/mirakle.git
+git clone https://github.com/kleczekr/mirakle-images.git
+
+cd mirakle
+
+# Install dependencies
+bundle install
+
+# Setup database
+rails db:create
+rails db:migrate
+
+# Start Redis (if not running)
+redis-server
+
+# Start Rails server
+rails server
+
+# Visit http://localhost:3000
+```
+
+### Writing Blog Posts
+
+```bash
+# Create a new post
+vim blog_posts/2025/10-october/2025-10-22-my-post.md
+
+# Add front matter + content
+---
+title: "My Post Title"
+slug: my-post-title
+published_at: 2025-10-22T12:00:00Z
+status: published
+tags: [ruby, rails]
+excerpt: "A brief description"
+---
+
+# Your content here...
+
+# Commit and push
+git add blog_posts/
+git commit -m "New post: My Post Title"
+git push
+
+# Deploy (once Capistrano is set up)
+cap production deploy
+```
 
 ---
 
-## Learning Resources
+## 🎨 Design Philosophy
 
-### Essential Books (in reading order)
-
-1. **"Agile Web Development with Rails 7"** by Sam Ruby
-   - THE definitive Rails book
-   - Start here - covers MVC, ActiveRecord, conventions
-   - Build a real app as you read
-
-2. **"The Well-Grounded Rubyist"** by David A. Black
-   - Deep dive into Ruby language itself
-   - Understanding blocks, procs, lambdas
-   - Read alongside Rails book
-
-3. **"Eloquent Ruby"** by Russ Olsen
-   - Ruby idioms and style
-   - How to write idiomatic Ruby code
-   - Read after you've written some code
-
-### Specialized Resources
-
-4. **"Rebuilding Rails"** by Noah Gibbs
-   - Understand Rails internals by building a mini-framework
-   - Advanced but illuminating
-
-5. **"High Performance PostgreSQL for Rails"** by Andrew Atkinson
-   - Database optimization for your analytics queries
-
-### Online Resources
-
-- **Rails Guides** (guides.rubyonrails.org) - Official, comprehensive, FREE
-- **GoRails** (gorails.com) - Video screencasts, worth subscription
-- **Ruby Tapas** by Avdi Grimm - Short focused videos on Ruby patterns
-- **Railscasts** - Older but fundamentals still valuable
-- **Rails API Documentation** - Excellent reference
-
-### Community
-
-- r/rails on Reddit
-- Rails Discord
-- Ruby on Rails Link Slack
+- **Developer happiness** - Optimize for workflow, not theoretical scale
+- **Build in public** - Document the journey
+- **Practical tools** - Solve real problems for creatives and developers
+- **Progressive enhancement** - Start simple, add complexity when needed
+- **Git-based content** - Version control everything
 
 ---
 
-## Key Features Summary
+## 📚 Learning Resources
 
-### Public Features (No Auth)
+This project is a learning journey into Ruby on Rails. Key resources:
 
-- Video portfolio (Vimeo embeds)
-- Blog articles
-- Interactive CV
-- Basic Shopify App Store stats:
-  - Top apps by category
-  - Recent trending apps
-  - Category overview
-
-### Premium Features (Google OAuth)
-
-- Historical trend analysis
-- Competitor comparison tools
-- App bookmarking with notes
-- Export data to CSV
-- Advanced filtering and search
-- Custom alerts (future)
-
-### Admin Features
-
-- AI social media post generator
-- Blog post management (draft/publish/private)
-- User management
-- Scraping job monitoring
-- Audit logs
-- Approve/edit AI-generated content
+- **"Agile Web Development with Rails 7"** by Sam Ruby
+- **"The Well-Grounded Rubyist"** by David A. Black
+- **"Eloquent Ruby"** by Russ Olsen
+- [Rails Guides](https://guides.rubyonrails.org)
+- [GoRails Screencasts](https://gorails.com)
 
 ---
 
-## Next Steps
+## 📝 License
 
-1. **Set up local development environment**
-   - Install Ruby (rbenv/asdf)
-   - Install Rails 7+
-   - Create new Rails project with PostgreSQL
-   - Install Redis
-
-2. **Initialize Git repository**
-   - Set up .gitignore
-   - Create GitHub repo
-
-3. **Start with Phase 1**
-   - Build basic blog structure
-   - Integrate Vimeo API
-   - Set up Liquid templating
-   - Deploy to Digital Ocean with Capistrano
-
-4. **Learn as you build**
-   - Read "Agile Web Development with Rails 7"
-   - Watch GoRails screencasts
-   - Experiment with Rails console
+MIT License - feel free to fork and adapt for your own projects!
 
 ---
 
-## Success Metrics
+## 🤝 Contributing
 
-### Technical
-
-- Daily scraping runs successfully
-- Change detection catches 95%+ of review edits/deletions
-- Page load times < 2 seconds for stats dashboard
-- Zero downtime deployments with Capistrano
-
-### Personal Growth
-
-- Comfortable writing idiomatic Ruby
-- Understanding Rails conventions deeply
-- Can debug Rails apps efficiently
-- Portfolio piece that showcases unique technical skills
-
-### Product
-
-- Functional analytics platform for Shopify App Store
-- Professional portfolio showcasing creative + technical work
-- Growing newsletter subscriber base
-- Premium users finding value in advanced stats
+This is primarily a personal learning project, but suggestions and ideas are
+welcome! Open an issue or reach out.
 
 ---
 
-_This is a living document. Update as project evolves and priorities shift._
+**Built in Arch Linux + Neovim (it works on my system)**
